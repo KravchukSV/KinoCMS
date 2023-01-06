@@ -38,8 +38,9 @@ public class DetailsFilmController {
     }
 
     @PostMapping(value = "/details_film.{id}", params = "addMainPicture")
-    public String uploadMainPicture(@RequestParam(value = "file", required = false) MultipartFile file,
+    public void uploadMainPicture(@RequestParam(value = "file", required = false) MultipartFile file,
                                     @ModelAttribute Film film) {
+        System.out.println("Ok");
 
         film.setListPicture(FilmService.getFilm().getListPicture());
         try {
@@ -47,52 +48,45 @@ public class DetailsFilmController {
                     .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
 
             film.setMainPicture("../img/"+copyLocation.getFileName());
-            FilmService.setFilm(film);
+            FilmService.getFilm().setMainPicture(film.getMainPicture());
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return "details_film";
     }
 
     @PostMapping(value = "/details_film.{id}", params = "add")
-    public String uploadPictures(@RequestParam(value = "files", required = false) MultipartFile[] files,
+    public void uploadPictures(@RequestParam(value = "files", required = false) MultipartFile[] files,
                                     @ModelAttribute Film film) {
 
         film.setMainPicture(FilmService.getFilm().getMainPicture());
+        film.setListPicture(FilmService.getFilm().getListPicture());
 
         for(MultipartFile file : files){
             try {
                 Path copyLocation = Paths
                         .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
-
-                Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
                 film.addPicture(new PicturesFilm("../img/"+copyLocation.getFileName()));
+                Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        FilmService.setFilm(film);
-        System.out.println(film);
-        return "details_film";
+    }
+
+    @PostMapping(value = "/details_film.{id}", params = "deleteImage")
+    public void deleteImage(@ModelAttribute Film film,
+                            @RequestParam(name = "deleteImage", required = false) int deleteImage){
+        film.setListPicture(FilmService.getFilm().getListPicture());
+        film.setMainPicture(FilmService.getFilm().getMainPicture());
+        film.deletePicture(deleteImage);
     }
 
 
     @PostMapping(value = "/details_film.{id}", params = "save")
     public String save(@ModelAttribute Film film){
-        film.setFilmID(FilmService.getFilm().getFilmID());
-        film.setMainPicture(FilmService.getFilm().getMainPicture());
-        film.setListPicture(FilmService.getFilm().getListPicture());
-        film.getDetailsFilm().setDetailsFilmID(FilmService.getFilm().getDetailsFilm().getDetailsFilmID());
 
-        filmRepository.save(film);
+        filmRepository.save(FilmService.getFilm());
         return "redirect:/films";
     }
-
-    @GetMapping("/advanced")
-    public String advanced(){
-        return "advanced";
-    }
-
 }

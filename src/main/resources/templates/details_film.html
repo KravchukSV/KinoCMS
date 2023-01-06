@@ -2,8 +2,11 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Films</title>
+    <title>Details film</title>
     <div th:insert="~{parts/links::links}"></div>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/image-style.css" />
+
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -48,22 +51,37 @@
                 <label class="col-sm-2 col-form-label">Головна картинка</label>
                 <div class="col-sm-9">
                     <img th:src="*{mainPicture}"  width="150">
-                    <input type="file" th:name="file"/>
-                    <button type="submit" class="btn btn-success" name="addMainPicture">Додати</button>
+                    <label for="mainPicture" class="btn btn-success label-middle">Вибрати файл</label>
+                    <input type="file" hidden id="mainPicture" th:name="file">
+                    <button type="submit" class="btn btn-success"  name="addMainPicture">
+                        Додати
+                    </button>
                 </div>
             </div>
+
 
             <!--Picture gallery-->
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Галерея картинок 1000х1900</label>
                 <div class="col-sm-9" >
 
-                    <th:block th:each="picture : *{listPicture}">
-                        <img th:src="${picture.picture}"  width="190" height="100">
+                    <th:block th:each="picture, state : *{listPicture}">
+                        <div class="img-wrap">
+                            <img th:src="${picture.picture}" width="190" height="100" th:name="pictureID">
+                            <button type="submit" class="deleteImage" th:name="deleteImage" th:value="${state.index}">&times;
+                            </button>
+                        </div>
+
+
+
                     </th:block>
 
-                    <input type="file" multiple th:name="files"/>
-                    <button type="submit" class="btn btn-success" name="add">Додати</button>
+
+                    <label for="pictureGallery" class="btn btn-success label-middle">Вибрати файли</label>
+                    <input type="file" hidden multiple id="pictureGallery" th:name="files">
+                    <button type="submit" class="btn btn-success"  name="add">
+                        Додати
+                    </button>
                 </div>
             </div>
 
@@ -95,7 +113,6 @@
                 </div>
             </div>
 
-
             <div class="row mb-3 justify-content-md-center">
                 <button name="save" type="submit" class="btn btn-success">Зберегти</button>
             </div>
@@ -108,5 +125,18 @@
 <!-- ./wrapper -->
 
 <div th:insert="~{parts/scripts::scripts}"></div>
+<!-- Page specific script -->
+<script>
+    var deleteBtns = document.querySelectorAll('.img-wrap .deleteImage')
+
+    for (var i = 0, l = closeBtns.length; i < l; i++) {
+        deleteBtns[i].addEventListener('click', function() {
+            var imgWrap = this.parentElement;
+            imgWrap.parentElement.removeChild(imgWrap);
+        });
+    }
+</script>
+
+
 </body>
 </html>

@@ -74,6 +74,10 @@ public class Film {
         listPicture.add(picturesFilm);
     }
 
+    public void deletePicture(int idPicture){
+        listPicture.remove(idPicture);
+    }
+
     @Override
     public String toString() {
         return "Film{" +
