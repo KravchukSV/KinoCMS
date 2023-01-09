@@ -1,4 +1,4 @@
-package com.example.kinocms.controller;
+package com.example.kinocms.controller.admin;
 
 import com.example.kinocms.entity.film.Film;
 import com.example.kinocms.entity.film.PicturesFilm;
@@ -25,7 +25,7 @@ public class DetailsFilmController {
     @Autowired
     private FilmRepository filmRepository;
 
-    @GetMapping("/details_film.{id}")
+    @GetMapping("/admin/details_film.{id}")
     public String details_film(@PathVariable("id") int id, Model model){
         if(id != 0){
             FilmService.setFilm(filmRepository.findById(id).get());
@@ -34,10 +34,10 @@ public class DetailsFilmController {
             FilmService.setFilm(new Film());
         }
         model.addAttribute("film", FilmService.getFilm());
-        return "details_film";
+        return "/admin/details_film";
     }
 
-    @PostMapping(value = "/details_film.{id}", params = "addMainPicture")
+    @PostMapping(value = "/admin/details_film.{id}", params = "addMainPicture")
     public void uploadMainPicture(@RequestParam(value = "file", required = false) MultipartFile file,
                                     @ModelAttribute Film film) {
         System.out.println("Ok");
@@ -55,7 +55,7 @@ public class DetailsFilmController {
         }
     }
 
-    @PostMapping(value = "/details_film.{id}", params = "add")
+    @PostMapping(value = "/admin/details_film.{id}", params = "add")
     public void uploadPictures(@RequestParam(value = "files", required = false) MultipartFile[] files,
                                     @ModelAttribute Film film) {
 
@@ -74,7 +74,7 @@ public class DetailsFilmController {
         }
     }
 
-    @PostMapping(value = "/details_film.{id}", params = "deleteImage")
+    @PostMapping(value = "/admin/details_film.{id}", params = "deleteImage")
     public void deleteImage(@ModelAttribute Film film,
                             @RequestParam(name = "deleteImage", required = false) int deleteImage){
         film.setListPicture(FilmService.getFilm().getListPicture());
@@ -83,10 +83,14 @@ public class DetailsFilmController {
     }
 
 
-    @PostMapping(value = "/details_film.{id}", params = "save")
+    @PostMapping(value = "/admin/details_film.{id}", params = "save")
     public String save(@ModelAttribute Film film){
 
+        FilmService.getFilm().setName(film.getName());
+        FilmService.getFilm().setDetailsFilm(film.getDetailsFilm());
+        FilmService.getFilm().setSeo(film.getSeo());
         filmRepository.save(FilmService.getFilm());
-        return "redirect:/films";
+
+        return "redirect:/admin/films";
     }
 }

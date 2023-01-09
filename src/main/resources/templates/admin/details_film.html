@@ -11,7 +11,7 @@
 <body class="hold-transition sidebar-mini">
 
 <!-- Site wrapper -->
-<div class="wrapper">
+<main class="wrapper">
     <div class="row">
         <div class="col">
             <div th:insert="~{parts/main header::main_header}"></div>
@@ -85,7 +85,6 @@
                 </div>
             </div>
 
-
             <!--link to trailer-->
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Посилання на трейлер</label>
@@ -113,6 +112,14 @@
                 </div>
             </div>
 
+            <!--SEO-->
+            <div class="row">
+                <div class="col">
+                    <div th:insert="~{parts/seo_block::seo}"></div>
+                </div>
+            </div>
+
+            <!--Save button-->
             <div class="row mb-3 justify-content-md-center">
                 <button name="save" type="submit" class="btn btn-success">Зберегти</button>
             </div>
@@ -121,7 +128,7 @@
 
     </div>
     <!-- /.content-wrapper -->
-</div>
+</main>
 <!-- ./wrapper -->
 
 <div th:insert="~{parts/scripts::scripts}"></div>

@@ -1,4 +1,4 @@
-package com.example.kinocms.controller;
+package com.example.kinocms.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +13,9 @@ public class GreetingController {
         return "greeting";
     }*/
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/admin")
     public String admin(){
-        return "admin";
+        return "/admin/admin";
     }
 
     @GetMapping("/index")

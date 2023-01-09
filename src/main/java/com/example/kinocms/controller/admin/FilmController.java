@@ -1,4 +1,4 @@
-package com.example.kinocms.controller;
+package com.example.kinocms.controller.admin;
 
 import com.example.kinocms.entity.film.Film;
 import com.example.kinocms.repos.FilmRepository;
@@ -14,15 +14,15 @@ public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
 
-    @GetMapping("/films")
+    @GetMapping("/admin/films")
     public String films(Model model){
         Iterable<Film> films = filmRepository.findAll();
         model.addAttribute("films", films);
-        return "films";
+        return "/admin/films";
     }
 
-    @PostMapping(value = "/film", params = "details")
+    @PostMapping(value = "/admin/films", params = "details")
     public String details(@ModelAttribute Film film){
-        return "redirect:details_film";
+        return "redirect:/admin/details_film";
     }
 }

@@ -1,4 +1,5 @@
 package com.example.kinocms.entity.film;
+import com.example.kinocms.entity.Seo;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -29,6 +30,12 @@ public class Film {
     @JoinColumn(name = "film_id")
     @Fetch(value = FetchMode.SELECT)
     private List<PicturesFilm> listPicture = new ArrayList<>();
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "seo_id")
+    @Fetch(value = FetchMode.SELECT)
+    private Seo seo;
 
     public int getFilmID() {
         return filmID;
@@ -78,14 +85,11 @@ public class Film {
         listPicture.remove(idPicture);
     }
 
-    @Override
-    public String toString() {
-        return "Film{" +
-                "filmID=" + filmID +
-                ", name='" + name + '\'' +
-                ", mainPicture='" + mainPicture + '\'' +
-                ", detailsFilm=" + detailsFilm +
-                ", listPicture=" + listPicture +
-                '}';
+    public Seo getSeo() {
+        return seo;
+    }
+
+    public void setSeo(Seo seo) {
+        this.seo = seo;
     }
 }
