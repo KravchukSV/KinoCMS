@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinemas</title>
+    <div th:insert="~{parts/links::links}"></div>
+</head>
+<body class="hold-transition sidebar-mini">
+
+<!-- Site wrapper -->
+<div class="wrapper">
+    <div class="row">
+        <div class="col">
+            <div th:insert="~{parts/main header::main_header}"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div th:insert="~{parts/sidebar::sidebar}"></div>
+        </div>
+    </div>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+
+
+
+                <div class="col">
+                    <div class="card text-center" style="width: 12rem;">
+                        <a href="#">
+                            <img src="../img/plus.png" class="card-img-center img-thumbnail" alt="">
+                            <div class="card-body">
+                                <h5 class="card-text">
+                                    Додати
+                                </h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<div th:insert="~{parts/scripts::scripts}"></div>
+</body>
+</html>
