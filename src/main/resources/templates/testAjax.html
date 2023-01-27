@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <title>Spring Boot Ajax实例</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+
+<div class="container" style="min-height: 500px">
+    <div class="starter-template">
+        <h1>Spring Boot AJAX 示例</h1>
+
+        <form>
+            <form id="file-upload-form">
+                <img id="feedback"  width="150">
+                <label for="file-upload-input">Select file to upload</label>
+                <input type="file" hidden id="file-upload-input" name="file">
+                <button type="submit" id="startButton">Start Upload</button>
+            </form>
+
+            <!--Сonditions-->
+            <form method="post" th:object="${cinema}">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Умови</label>
+                    <div class="col-sm-9">
+                        <textarea type="text" class="form-control" th:field="*{detailsCinema.conditions}" placeholder="умови"></textarea>
+                    </div>
+                </div>
+            </form>
+
+            <!--Logotype-->
+            <form th:object="${cinema}" id="logotype-form">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Логотип</label>
+                    <div class="col-sm-9">
+                        <img th:src="*{logotype}"  width="150" id="logotypeImg">
+                        <label for="logotypeInput" class="btn btn-success label-middle">Вибрати файл</label>
+                        <input type="file" hidden id="logotypeInput" th:name="fileLogotype">
+                        <button type="submit" class="btn btn-success"  name="addLogotype">
+                            Додати
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+            <!--Main picture-->
+            <form method="post" id="main-picture-form" th:object="${film}">
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Головна картинка</label>
+                    <div class="col-sm-9">
+                        <img th:src="*{mainPicture}"  id="mainPictureImg" width="150">
+                        <label for="mainPicture" class="btn btn-success label-middle">Вибрати файл</label>
+                        <input type="file" hidden id="mainPicture" name="fileMainPicture">
+                        <button type="submit" class="btn btn-success"  name="addMainPicture">
+                            Додати
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </form>
+
+    </div>
+</div>
+<script type="text/javascript"
+        src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
+
+更多请阅读：https://www.yiibai.com/spring-boot/ajax-example.html
+
