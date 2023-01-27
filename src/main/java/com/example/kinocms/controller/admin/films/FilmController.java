@@ -1,4 +1,4 @@
-package com.example.kinocms.controller.admin;
+package com.example.kinocms.controller.admin.films;
 
 import com.example.kinocms.entity.film.Film;
 import com.example.kinocms.repos.FilmRepository;
@@ -16,8 +16,7 @@ public class FilmController {
 
     @GetMapping("/admin/films")
     public String films(Model model){
-        Iterable<Film> films = filmRepository.findAll();
-        model.addAttribute("films", films);
+        model.addAttribute("films", filmRepository.findAll());
         return "/admin/films";
     }
 

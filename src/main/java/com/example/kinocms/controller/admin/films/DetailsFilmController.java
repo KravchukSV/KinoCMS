@@ -1,4 +1,4 @@
-package com.example.kinocms.controller.admin;
+package com.example.kinocms.controller.admin.films;
 
 import com.example.kinocms.entity.film.Film;
 import com.example.kinocms.entity.film.PicturesFilm;
@@ -40,9 +40,8 @@ public class DetailsFilmController {
     @PostMapping(value = "/admin/details_film.{id}", params = "addMainPicture")
     public void uploadMainPicture(@RequestParam(value = "file", required = false) MultipartFile file,
                                     @ModelAttribute Film film) {
-        System.out.println("Ok");
 
-        film.setListPicture(FilmService.getFilm().getListPicture());
+        setValuesFilm(film);
         try {
             Path copyLocation = Paths
                     .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
@@ -59,8 +58,7 @@ public class DetailsFilmController {
     public void uploadPictures(@RequestParam(value = "files", required = false) MultipartFile[] files,
                                     @ModelAttribute Film film) {
 
-        film.setMainPicture(FilmService.getFilm().getMainPicture());
-        film.setListPicture(FilmService.getFilm().getListPicture());
+        setValuesFilm(film);
 
         for(MultipartFile file : files){
             try {
@@ -77,8 +75,7 @@ public class DetailsFilmController {
     @PostMapping(value = "/admin/details_film.{id}", params = "deleteImage")
     public void deleteImage(@ModelAttribute Film film,
                             @RequestParam(name = "deleteImage", required = false) int deleteImage){
-        film.setListPicture(FilmService.getFilm().getListPicture());
-        film.setMainPicture(FilmService.getFilm().getMainPicture());
+        setValuesFilm(film);
         film.deletePicture(deleteImage);
     }
 
@@ -86,11 +83,17 @@ public class DetailsFilmController {
     @PostMapping(value = "/admin/details_film.{id}", params = "save")
     public String save(@ModelAttribute Film film){
 
-        FilmService.getFilm().setName(film.getName());
-        FilmService.getFilm().setDetailsFilm(film.getDetailsFilm());
-        FilmService.getFilm().setSeo(film.getSeo());
+        setValuesFilm(film);
         filmRepository.save(FilmService.getFilm());
 
         return "redirect:/admin/films";
+    }
+
+    public void setValuesFilm(Film film){
+        FilmService.getFilm().setName(film.getName());
+        FilmService.getFilm().setDetailsFilm(film.getDetailsFilm());
+        FilmService.getFilm().setSeo(film.getSeo());
+        film.setListPicture(FilmService.getFilm().getListPicture());
+        film.setMainPicture(FilmService.getFilm().getMainPicture());
     }
 }

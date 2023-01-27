@@ -92,4 +92,16 @@ public class Film {
     public void setSeo(Seo seo) {
         this.seo = seo;
     }
+
+    @Override
+    public String toString() {
+        return "Film{" +
+                "filmID=" + filmID +
+                ", name='" + name + '\'' +
+                ", mainPicture='" + mainPicture + '\'' +
+                ", detailsFilm=" + detailsFilm +
+                ", listPicture=" + listPicture +
+                ", seo=" + seo +
+                '}';
+    }
 }
