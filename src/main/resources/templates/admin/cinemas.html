@@ -26,11 +26,22 @@
         <div class="container-fluid">
             <div class="row">
 
-
+                <th:block th:each="cinema : ${cinemas}">
+                    <div class="col-md-auto">
+                        <div class="card text-center" style="width: 12rem;">
+                            <a th:href="@{details_cinema.{id}(id = ${cinema.cinemaID})}">
+                                <img th:src="${cinema.logotype}" class="card-img-top img-thumbnail" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-text" th:text="${cinema.name}"></h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </th:block>
 
                 <div class="col">
                     <div class="card text-center" style="width: 12rem;">
-                        <a href="#">
+                        <a th:href="@{details_cinema.{id}(id = ${0})}">
                             <img src="../img/plus.png" class="card-img-center img-thumbnail" alt="">
                             <div class="card-body">
                                 <h5 class="card-text">
